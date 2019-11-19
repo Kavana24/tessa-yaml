@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: celljobtest5
+spec:
+  template:
+    metadata:
+      labels:
+        app: celljobtest5
+    spec:
+      initContainers:
+      - name: celljobtest5-copydata
+        image: asia.gcr.io/ts-uat/initcontainerimg:v1
+        workingDir: /mounttest
+        command: ["/bin/bash","-c","gsutil cp -n -r gs://testinggenomic/PUC_test /mounttest/ && ls "]
+        volumeMounts:
+        - name: ssd-persistent-storage
+          mountPath: /mounttest
+        securityContext:
+          privileged: true
+      containers:
+        - name: celljobtest5-cellranger
+          image: asia.gcr.io/ts-uat/cellgsutil:v1
+          workingDir: /mounttest
+          command: ["/bin/sh"]
+          args: ["-c", "cellranger count --id=1k_PBMC_PUC-2 --transcriptome=/mounttest/PUC_test/reference/refdata-cellranger-GRCh38-3.0.0 --sample=pbmc_1k_v3 --fastqs=/mounttest/PUC_test/pbmc_1k_v3_fastqs; ls; gsutil cp -r 1k_PBMC_PUC-2 gs://testinggenomic "]
+          volumeMounts:
+          - name: ssd-persistent-storage
+            mountPath: /mounttest
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - SYS_ADMIN
+      restartPolicy: Never
+      volumes:
+        - name: ssd-persistent-storage
+          persistentVolumeClaim:
+             claimName: ssd-data

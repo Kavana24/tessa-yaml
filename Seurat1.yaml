@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: seurat-{{BUILDID}}
+spec:
+  template:
+    metadata:
+      labels:
+        app: seuart-{{BUILDID}}
+    spec:
+      initContainers:
+      - name: seurattestjob-copydata
+        image: asia.gcr.io/ts-uat/initcontainerimg:v1
+        workingDir: /mounttest
+        command: ["/bin/bash","-c","gsutil cp -n -r {{SEURATGCSBUCKET}} /mounttest/ && ls "]
+        volumeMounts:
+        - name: ssd-persistent-storage
+          mountPath: /mounttest
+        securityContext:
+          privileged: true
+      containers:
+        - name: seurattestjob-seurat
+          image: asia.gcr.io/ts-uat/seuratimg_conda:v1
+          workingDir: /mounttest
+          command: ["/bin/sh"]
+          args: ["-c", "source ~/.bashrc; source activate py36; mkdir seurat1out-{{BUILDID}} ; cd seurat1out-{{BUILDID}} ; Rscript /mounttest/Taka/Scripts/Seurat1.R /mounttest/Taka/Taka_HER2CAR_ATC/outs/filtered_feature_bc_matrix /mounttest/Taka/Taka_HER2CAR_VST/outs/filtered_feature_bc_matrix; ls "]
+          volumeMounts:
+          - name: ssd-persistent-storage
+            mountPath: /mounttest
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - SYS_ADMIN
+      restartPolicy: Never
+      volumes:
+        - name: ssd-persistent-storage
+          persistentVolumeClaim:
+             claimName: ssd-data

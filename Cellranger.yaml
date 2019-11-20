@@ -1,12 +1,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: Cellranger-{{BUILDID}}
+  name: cellranger-{{BUILDID}}
 spec:
   template:
     metadata:
       labels:
-        app: Cellranger-{{BUILDID}}
+        app: cellranger-{{BUILDID}}
     spec:
       initContainers:
       - name: celljobtest5-copydata

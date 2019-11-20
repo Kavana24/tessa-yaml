@@ -1,18 +1,18 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: Cellranger-$BUILDID
+  name: Cellranger-{{BUILDID}}
 spec:
   template:
     metadata:
       labels:
-        app: Cellranger-$BUILDID
+        app: Cellranger-{{BUILDID}}
     spec:
       initContainers:
       - name: celljobtest5-copydata
         image: asia.gcr.io/ts-uat/initcontainerimg:v1
         workingDir: /mounttest
-        command: ["/bin/bash","-c","gsutil cp -n -r $CELLRANGERGCSBUCKET /mounttest/ && ls "]
+        command: ["/bin/bash","-c","gsutil cp -n -r {{CELLRANGERGCSBUCKET}} /mounttest/ && ls "]
         volumeMounts:
         - name: ssd-persistent-storage
           mountPath: /mounttest
@@ -23,7 +23,7 @@ spec:
           image: asia.gcr.io/ts-uat/cellgsutil:v1
           workingDir: /mounttest
           command: ["/bin/sh"]
-          args: ["-c", "cellranger count --id=1k_PBMC_$BUILID --transcriptome=/mounttest/PUC_test/reference/refdata-cellranger-GRCh38-3.0.0 --sample=pbmc_1k_v3 --fastqs=/mounttest/PUC_test/pbmc_1k_v3_fastqs; ls; gsutil cp -r 1k_PBMC_BUILDID gs://testinggenomic "]
+          args: ["-c", "cellranger count --id=1k_PBMC_{{BUILID}} --transcriptome=/mounttest/PUC_test/reference/refdata-cellranger-GRCh38-3.0.0 --sample=pbmc_1k_v3 --fastqs=/mounttest/PUC_test/pbmc_1k_v3_fastqs; ls; gsutil cp -r 1k_PBMC_{{BUILDID}} gs://testinggenomic "]
           volumeMounts:
           - name: ssd-persistent-storage
             mountPath: /mounttest

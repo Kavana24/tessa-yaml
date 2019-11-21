@@ -22,8 +22,8 @@ spec:
         - name: seurattestjob-seurat
           image: asia.gcr.io/ts-uat/seuratimg_conda:v1
           workingDir: /mounttest
-          command: ["/bin/sh"]
-          args: ["-c", "source ~/.bashrc; source activate py36; mkdir seurat1out-{{BUILDID}} ; cd seurat1out-{{BUILDID}} ; Rscript /mounttest/Taka/Scripts/Seurat1.R /mounttest/Taka/Taka_HER2CAR_ATC/outs/filtered_feature_bc_matrix /mounttest/Taka/Taka_HER2CAR_VST/outs/filtered_feature_bc_matrix; ls "]
+          command: ["/bin/bash"]
+          args: ["-c", "source ~/.bashrc; source activate py36; mkdir seurat1out-{{BUILDID}} ; cd seurat1out-{{BUILDID}} ; Rscript /mounttest/Taka/Scripts/Seurat1.R /mounttest/{{ATCINPUTFOLDERPATH}} /mounttest/{{VTSINPUTFOLDERPATH}}; ls "]
           volumeMounts:
           - name: ssd-persistent-storage
             mountPath: /mounttest

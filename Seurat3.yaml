@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: seurat3-{{BUILDID}}
+spec:
+  template:
+    metadata:
+      labels:
+        app: seuart3-{{BUILDID}}
+    spec:
+      containers:
+        - name: seurat3job-seurat
+          image: asia.gcr.io/ts-uat/seuratimg_conda:v1
+          workingDir: /mounttest
+          command: ["/bin/bash"]
+          args: ["-c", "source ~/.bashrc; source activate py36; mkdir seurat3out-{{BUILDID}} ; cd seurat3out-{{BUILDID}} ; mkdir CD4_renorm ; Rscript /mounttest/Taka/Scripts/Seurat3.R /mounttest/{{RDSINPUTFOLDERPATH}} ; ls ; gsutil cp -r ../seurat3out-{{BUILDID}} gs://testinggenomic/Seurat_output "]
+          volumeMounts:
+          - name: ssd-persistent-storage
+            mountPath: /mounttest
+          securityContext:seurat3out-{{BUILDID}}
+            privileged: true
+            capabilities:
+              add:
+                - SYS_ADMIN
+      restartPolicy: Never
+      volumes:
+        - name: ssd-persistent-storage
+          persistentVolumeClaim:
+             claimName: ssd-data

@@ -12,7 +12,7 @@ spec:
       - name: seurat1job-copydata
         image: asia.gcr.io/ts-uat/initcontainerimg:v1
         workingDir: /mounttest
-        command: ["/bin/bash","-c","gsutil cp -n -r {{SEURATGCSBUCKET}} /mounttest/ && ls "]
+        command: ["/bin/bash","-c","gsutil cp -r {{SEURATGCSBUCKET}} /mounttest/ && ls "]
         volumeMounts:
         - name: ssd-persistent-storage
           mountPath: /mounttest

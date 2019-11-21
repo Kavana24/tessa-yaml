@@ -23,7 +23,7 @@ spec:
           image: asia.gcr.io/ts-uat/seuratimg_conda:v1
           workingDir: /mounttest
           command: ["/bin/bash"]
-          args: ["-c", "source ~/.bashrc; source activate py36; mkdir seurat1out-{{BUILDID}} ; cd seurat1out-{{BUILDID}} ; Rscript /mounttest/Taka/Scripts/Seurat1.R /mounttest/{{ATCINPUTFOLDERPATH}} /mounttest/{{VTSINPUTFOLDERPATH}}; ls "]
+          args: ["-c", "source ~/.bashrc; source activate py36; mkdir seurat1out-{{BUILDID}} ; cd seurat1out-{{BUILDID}} ; Rscript /mounttest/Taka/Scripts/Seurat1.R /mounttest/{{ATCINPUTFOLDERPATH}} /mounttest/{{VTSINPUTFOLDERPATH}}; ls ; gsutil cp -r ../seurat1out-{{BUILDID}} gs://testinggenomic/Seurat_output "]
           volumeMounts:
           - name: ssd-persistent-storage
             mountPath: /mounttest

@@ -20,10 +20,10 @@ spec:
           privileged: true
       containers:
         - name: seurat1job-seurat
-          image: asia.gcr.io/ts-uat/seuratimg_conda:v1
+          image: asia.gcr.io/ts-uat/seuratimg_conda:v2
           workingDir: /mounttest
           command: ["/bin/bash"]
-          args: ["-c", "source ~/.bashrc; source activate py36; mkdir seurat1out-{{BUILDID}} ; cd seurat1out-{{BUILDID}} ; Rscript /mounttest/Taka/Scripts/Seurat1.R /mounttest/{{ATCINPUTFOLDERPATH}} /mounttest/{{VTSINPUTFOLDERPATH}}; ls ; gsutil cp -r ../seurat1out-{{BUILDID}} gs://testinggenomic/Seurat_output "]
+          args: ["-c", "source ~/.bashrc; source activate py36; sh /mounttest/Taka/Scripts/Seurat1bash.sh {{BUILDID}} {{JENKINSJOBNAME}} /mounttest/{{ATCINPUTFOLDERPATH}} /mounttest/{{VTSINPUTFOLDERPATH}}"]
           volumeMounts:
           - name: ssd-persistent-storage
             mountPath: /mounttest

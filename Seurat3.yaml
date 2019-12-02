@@ -10,10 +10,10 @@ spec:
     spec:
       containers:
         - name: seurat3job-seurat
-          image: asia.gcr.io/ts-uat/seuratimg_conda:v1
+          image: asia.gcr.io/ts-uat/seuratimg_conda:v2
           workingDir: /mounttest
           command: ["/bin/bash"]
-          args: ["-c", "source ~/.bashrc; source activate py36; mkdir seurat3out-{{BUILDID}} ; cd seurat3out-{{BUILDID}} ; mkdir CD4_renorm ; Rscript /mounttest/Taka/Scripts/Seurat3.R /mounttest/{{RDSINPUTFOLDERPATH}} ; ls ; gsutil cp -r ../seurat3out-{{BUILDID}} gs://testinggenomic/Seurat_output "]
+          args: ["-c", "source ~/.bashrc; source activate py36; sh /mounttest/Taka/Scripts/Seurat3bash.sh {{BUILDID}} {{JENKINSJOBNAME}} /mounttest/{{RDSINPUTFOLDERPATH}} "]
           volumeMounts:
           - name: ssd-persistent-storage
             mountPath: /mounttest

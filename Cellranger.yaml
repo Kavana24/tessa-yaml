@@ -20,10 +20,10 @@ spec:
           privileged: true
       containers:
         - name: celljobtest5-cellranger
-          image: asia.gcr.io/ts-uat/cellgsutil:v1
+          image: asia.gcr.io/ts-uat/cellgsutil:v2
           workingDir: /mounttest
           command: ["/bin/sh"]
-          args: ["-c", "cellranger count --id=1k_PBMC_{{BUILDID}} --transcriptome=/mounttest/PUC_test/reference/refdata-cellranger-GRCh38-3.0.0 --sample=pbmc_1k_v3 --fastqs=/mounttest/PUC_test/pbmc_1k_v3_fastqs; ls; gsutil cp -r 1k_PBMC_{{BUILDID}} gs://testinggenomic/Cellranger_output "]
+          args: ["-c", "sh /mounttest/PUC_test/Cellrangerbash.sh {{BUILDID}} {{JENKINSJOBNAME}}"]
           volumeMounts:
           - name: ssd-persistent-storage
             mountPath: /mounttest

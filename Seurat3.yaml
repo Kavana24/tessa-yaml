@@ -17,7 +17,7 @@ spec:
           volumeMounts:
           - name: ssd-persistent-storage
             mountPath: /mounttest
-          securityContext:seurat3out-{{BUILDID}}
+          securityContext:
             privileged: true
             capabilities:
               add:

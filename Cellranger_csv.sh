@@ -22,6 +22,7 @@ size=`gsutil du -s $gcsbucket`
 sizespilt="$(cut -d ' ' -f1 <<<"$size")"
 sizemul=`expr $sizespilt \* 2`
 PVCSIZE=`expr $sizemul / 1073741824`
+echo $PVCSIZE
 	    
 java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build cellranger-pipeline -p size=$PVCSIZE -p id=$id -p transcriptome=$transcriptome -p sample=$sample1 -p fastqs=$fastqs -p gcsbucket=$gcsbucket
 	

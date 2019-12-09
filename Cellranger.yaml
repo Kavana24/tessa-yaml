@@ -10,9 +10,7 @@ spec:
     requests:
       storage: {{PVCSIZE}}Gi
   storageClassName: ssd
-  -----------------------------------------------------------
-
-
+  ---
 apiVersion: batch/v1
 kind: Job
 metadata:

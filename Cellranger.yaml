@@ -8,7 +8,7 @@ spec:
   resources:
     requests:
       storage: {{PVCSIZE}}Gi
-  storageClassName: ssd
+  storageClassName: ssd-testpvc
 ---
 apiVersion: batch/v1
 kind: Job

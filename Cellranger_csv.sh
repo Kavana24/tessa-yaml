@@ -18,6 +18,7 @@ while IFS=, read heading1 heading2 heading3 heading4 heading5; do
     echo sample1 = $sample1
     echo gcsbucket = $gcsbucket
     size=`gsutil du -s $gcsbucket`
+    gsutil ls
     echo $size
     sizespilt="$(cut -d ' ' -f1 <<<"$size")"
     sizemul=`expr $sizespilt \* 2`

@@ -13,7 +13,7 @@ metadata:
   name: ssd-data-cellranger-{{BUILDID}}
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteManyOnce
   resources:
     requests:
       storage: {{PVCSIZE}}Gi

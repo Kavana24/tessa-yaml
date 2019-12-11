@@ -5,7 +5,7 @@ dos2unix $input
 exec < $input || exit 1
 read header # read (and ignore) the first line
 while IFS=, read heading1 heading2 heading3 heading4 heading5; do
-    echo '('`date +"%s.%N"` ' * 1000000)/1' | bc
+    echo '('`date +"%s.%N"` ' * 1000000)/1'
     id="$heading1"
     transcriptome="$heading2"
     fastqs="$heading3"
@@ -25,5 +25,5 @@ while IFS=, read heading1 heading2 heading3 heading4 heading5; do
     PVCSIZE=`expr $sizemul / 1073741824`
     echo $PVCSIZE
     java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build  Cellranger-pipeline-freestyle -p size=$PVCSIZE -p id=$id -p transcriptome=$transcriptome -p sample=$sample1 -p fastqs=$fastqs -p gcsbucket=$gcsbucket
-    echo '('`date +"%s.%N"` ' * 1000000)/1' | bc
+    echo '('`date +"%s.%N"` ' * 1000000)/1'
 done

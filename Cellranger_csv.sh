@@ -23,5 +23,5 @@ while IFS=, read heading1 heading2 heading3 heading4 heading5; do
     sizemul=`expr $sizespilt \* 4`
     PVCSIZE=`expr $sizemul / 1073741824`
     echo $PVCSIZE
-    #java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Testing_jenkins_cli -p param1=hello
+    java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Testing_jenkins_cli -p param1=hello
 done

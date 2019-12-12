@@ -4,7 +4,7 @@ input1="sample3.csv"
 dos2unix $input
 exec < $input || exit 1
 awk 'NR>1' $input > $input1
-while IFS=',' read -r heading1 heading2 heading3 heading4 <&3;
+while IFS=',' read -r heading1 heading2 heading3 heading4 heading5 <&3;
 do
 id="$heading1"
 transcriptome="$heading2"

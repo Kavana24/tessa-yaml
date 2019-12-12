@@ -11,5 +11,5 @@ echo $x
 #echo $i
 $i=$(($i+1))
 #timestamp=$(date +%s)
-#echo $i
+echo $i
 done

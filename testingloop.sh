@@ -1,6 +1,6 @@
 #!/bin/bash
  x=1
- #i=1
+ i=1
 while [ $x -le 3 ]
 do
 #timestamp=$(date +%s)
@@ -9,7 +9,7 @@ do
 $x=$(($x+1))
 echo $x
 #echo $i
-#$i=$(($i+1))
+$i=$(($i+1))
 #timestamp=$(date +%s)
-#echo $timestamp
+#echo $i
 done

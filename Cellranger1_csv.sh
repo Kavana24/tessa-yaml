@@ -4,13 +4,13 @@ input1="sample3.csv"
 dos2unix $input
 exec < $input || exit 1
 awk 'NR>1' $input > $input1
-while IFS=',' read -r heading1 heading2 heading3 heading4 heading5 <&3;
+while IFS=',' read -r id transcriptome fastqs sample gcsbucket <&3;
 do
-id="$heading1"
-transcriptome="$heading2"
-fastqs="$heading3"
-sample="$heading4"
-gcsbucket="$heading5"
+id="$id"
+transcriptome="$transcriptome"
+fastqs="$fastqs"
+sample="$sample"
+gcsbucket="$gcsbucket"
 sample1=`echo $sample | sed 's/"""//g'`
 echo id = $id
 echo transcriptome = $transcriptome

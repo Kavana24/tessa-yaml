@@ -21,7 +21,7 @@ spec:
         app: cellranger-{{BUILDID}}
     spec:
       initContainers:
-      - name: celljobtest5-copydata
+      - name: cellranger-copydata
         image: asia.gcr.io/ts-uat/initcontainerimg:v1
         workingDir: /mounttest
         command: ["/bin/bash","-c","gsutil cp -r {{CELLRANGERGCSBUCKET}} /mounttest/ && ls "]
@@ -31,7 +31,7 @@ spec:
         securityContext:
           privileged: true
       containers:
-        - name: celljobtest5-cellranger
+        - name: cellranger-cellranger
           image: asia.gcr.io/ts-uat/cellgsutil:v2
           workingDir: /mounttest
           command: ["/bin/sh"]

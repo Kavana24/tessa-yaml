@@ -32,10 +32,10 @@ spec:
           privileged: true
       containers:
         - name: cellranger-cellranger
-          image: asia.gcr.io/ts-uat/cellgsutil:v2
+          image: asia.gcr.io/ts-uat/cellgsutil:v3
           workingDir: /mounttest
           command: ["/bin/sh"]
-          args: ["-c", "sh /mounttest/PUC_test/Cellrangerbash.sh {{BUILDID}} {{JENKINSJOBNAME}} {{ID}} {{TRANSCRIPTOME}} {{SAMPLE}} {{FASTQS}}"]
+          args: ["-c", "sh /mounttest/Cellrangerbash.sh {{BUILDID}} {{JENKINSJOBNAME}} {{ID}} {{TRANSCRIPTOME}} {{SAMPLE}} {{FASTQS}}"]
           volumeMounts:
           - name: ssd-persistent-storage
             mountPath: /mounttest

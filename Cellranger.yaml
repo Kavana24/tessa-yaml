@@ -24,7 +24,7 @@ spec:
       - name: cellranger-copydata
         image: asia.gcr.io/ts-uat/initcontainerimg:v1
         workingDir: /mounttest
-        command: ["/bin/bash","-c","gsutil cp -r gs://testinggenomic/20190128_Proteona/reference /mountest/ && gsutil cp -r {{CELLRANGERGCSBUCKET}} /mounttest/ && ls "]
+        command: ["/bin/bash","-c","gsutil cp -r gs://testinggenomic/20190128_Proteona/reference /mountest/ && gsutil cp -r {{CELLRANGERGCSBUCKET}} /mounttest/ && ls"]
         volumeMounts:
         - name: ssd-persistent-storage
           mountPath: /mounttest

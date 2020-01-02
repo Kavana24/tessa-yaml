@@ -44,4 +44,3 @@ java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build  Ce
 done
 rm output.csv
 rm $input1
-

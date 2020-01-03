@@ -30,6 +30,15 @@ spec:
           mountPath: /mounttest
         securityContext:
           privileged: true
+      - name: cellranger-copydata
+        image: asia.gcr.io/ts-uat/initcontainerimg:v1
+        workingDir: /mounttest
+        command: ["/bin/bash","-c"," rm -rf {{ID}}-{{BUILDID}}"]
+        volumeMounts:
+        - name: ssd-persistent-storage
+          mountPath: /mounttest
+        securityContext:
+          privileged: true
       containers:
         - name: cellranger-cellranger
           image: asia.gcr.io/ts-uat/cellgsutil:v5

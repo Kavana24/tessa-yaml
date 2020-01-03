@@ -32,7 +32,7 @@ spec:
           privileged: true
       containers:
         - name: cellranger-cellranger
-          image: asia.gcr.io/ts-uat/cellgsutil:v4
+          image: asia.gcr.io/ts-uat/cellgsutil:v5
           workingDir: /mounttest
           command: ["/bin/sh"]
           args: ["-c", "sh /Cellrangerbash.sh {{BUILDID}} {{JENKINSJOBNAME}} {{ID}} {{TRANSCRIPTOME}} {{SAMPLE}} {{FASTQS}}"]

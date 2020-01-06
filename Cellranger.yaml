@@ -44,7 +44,7 @@ spec:
           image: asia.gcr.io/ts-uat/cellgsutil:v5
           workingDir: /mounttest
           command: ["/bin/sh"]
-          args: ["-c", "sh /Cellrangerbash.sh {{BUILDID}} {{JENKINSJOBNAME}} {{EXPID}} {{ID}} {{TRANSCRIPTOME}} {{SAMPLE}} {{FASTQS}}"]
+          args: ["-c", "sh /Cellrangerbash.sh {{BUILDID}} {{JENKINSJOBNAME}} {{ID}} {{TRANSCRIPTOME}} {{SAMPLE}} {{FASTQS}} {{EXPID}}"]
           volumeMounts:
           - name: ssd-persistent-storage
             mountPath: /mounttest

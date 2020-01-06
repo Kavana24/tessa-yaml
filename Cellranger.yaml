@@ -30,7 +30,7 @@ spec:
           mountPath: /mounttest
         securityContext:
           privileged: true
-      - name: cellranger-copydata
+      - name: cellranger-checkexistingfile
         image: asia.gcr.io/ts-uat/initcontainerimg:v1
         workingDir: /mounttest
         command: ["/bin/bash","-c"," rm -rf {{ID}}-{{BUILDID}}"]

@@ -52,7 +52,7 @@ echo $PVCSIZE
 count=`mysql -hseurat-test -P3306 -ujenkinsuser -pjenkins123 -D tessa_output -B -N -e "Select count(Sample_ID) from $expid where Sample_ID='$id'";`
 if [ $count -eq 1 ]
 then
-java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build  Cellranger-pipeline -p size=$PVCSIZE -p Experiment_ID=$expid-p id=$id -p transcriptome=$transcriptome -p sample=$sample1 -p fastqs=$fastqs -p gcsbucket=$gcsbucket
+java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build  Cellranger-pipeline -p size=$PVCSIZE -p Experiment_ID=$expid -p id=$id -p transcriptome=$transcriptome -p sample=$sample1 -p fastqs=$fastqs -p gcsbucket=$gcsbucket
 else
 echo "Invalid ID for the corresponding Experiment"; 
 fi

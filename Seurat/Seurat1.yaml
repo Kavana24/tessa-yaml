@@ -1,18 +1,39 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ssd-data-seurat-{{BUILDID}}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{PVCSIZE}}Gi
+  storageClassName: ssd
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: seurat1-{{BUILDID}}
+  name: {{expidlower}}-seurat1-{{BUILDID}}
 spec:
   template:
     metadata:
       labels:
-        app: seuart1-{{BUILDID}}
+        app: {{expidlower}}-seuart1-{{BUILDID}}
     spec:
       initContainers:
       - name: seurat1job-copydata
         image: asia.gcr.io/ts-uat/initcontainerimg:v1
         workingDir: /mounttest
         command: ["/bin/bash","-c","gsutil cp -r {{SEURATGCSBUCKET}} /mounttest/ && ls "]
+        volumeMounts:
+        - name: ssd-persistent-storage
+          mountPath: /mounttest
+        securityContext:
+          privileged: true
+      - name: seurat1job-checkexistingfile
+        image: asia.gcr.io/ts-uat/initcontainerimg:v1
+        workingDir: /mounttest
+        command: ["/bin/bash","-c"," rm -rf /mounttest/{{ID}}_{{BUILDID}}"]
         volumeMounts:
         - name: ssd-persistent-storage
           mountPath: /mounttest
@@ -36,4 +57,4 @@ spec:
       volumes:
         - name: ssd-persistent-storage
           persistentVolumeClaim:
-             claimName: ssd-data
+             claimName: ssd-data-seurat-{{BUILDID}}

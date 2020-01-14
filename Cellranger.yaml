@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        app: cellranger-{{BUILDID}}
+        app: {{expidlower}}-{{idlower}}-cellranger-{{BUILDID}}
     spec:
       initContainers:
       - name: cellranger-copydata

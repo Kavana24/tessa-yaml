@@ -1,6 +1,6 @@
 #!/bin/bash
 input="$1"
-input1="sample$opGcsArrRANDOM.csv"
+input1="sample$RANDOM.csv"
 dos2unix $input
 exec < $input || exit 1
 awk 'NR>1' $input > $input1
@@ -35,7 +35,6 @@ printf '%s\n'  "${sampleIdArr[@]}";
 printf '%s\n'  "${opGcsArr[@]}";
 rm output.csv
 rm $input1
-
 function seurat() {
    arr=("$@")
    len=${#sampleIdArr[@]}
@@ -45,10 +44,7 @@ echo "${sampleIdArr[i]} <- Read10X(data.dir=\""${opGcsArr[i]}"\")"
 done
 for ((j=0; j<$len; j++))
 do
-
-
 echo "${sampleIdArr[j]} <- CreateSeuratObject(counts=${sampleIdArr[j]}, project=\""${sampleIdArr[j]}"\")"
-
 done
 for ((k=0; k<$len-1; k++))
 do
@@ -57,13 +53,12 @@ done
 }
 Rscript="Seurat$RANDOM.txt"
 seurat "${sampleIdArr[@]} ${opGcsArr[@]}" > $Rscript
-sed -i '3r Seuratnew.txt' Seurat.R
+sed -i "3r $Rscript" Seurat.R
 
 function bucketcopy() {
 arr=("$@")
 for bucket in ${arr[@]}
 do
-echo $bucket
 `gsutil cp -r $bucket mountest/`
 done
 }

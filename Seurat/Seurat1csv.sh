@@ -60,8 +60,8 @@ seurat "${sampleIdArr[@]} ${opGcsArr[@]}" > $Rscript
 sed -i '3r Seuratnew.txt' Seurat.R
 
 function bucketcopy() {
-arr=("$1")
-for bucket in $arr
+arr=("$@")
+for bucket in ${arr[@]}
 do
 echo $bucket
 `gsutil cp -r $bucket mountest/`

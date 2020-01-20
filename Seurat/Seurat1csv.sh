@@ -53,13 +53,13 @@ done
 }
 Rscript="Seurat$RANDOM.txt"
 seurat "${sampleIdArr[@]} ${opGcsArr[@]}" > $Rscript
-sed -i "3r $Rscript" Seurat.R
+sed -i "3r $Rscript" /mounttest/Seurat/Seurat1.R
 
 function bucketcopy() {
 arr=("$@")
 for bucket in ${arr[@]}
 do
-`gsutil cp -r $bucket mountest/`
+`gsutil cp -r $bucket mounttest/`
 done
 }
 bucketcopy "${originalgcsbucArr[@]}"

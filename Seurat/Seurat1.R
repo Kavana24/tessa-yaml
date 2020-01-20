@@ -1,15 +1,6 @@
-args<-commandArgs(TRUE)
+### start of run
 library(Seurat)
 library(dplyr)
-ATCfilepath <- args[1]
-#print(ATCfilepath)
-VSTfilepath <- args[2]
-#print(VSTfilepath)
-ATC <- Read10X(data.dir=ATCfilepath)
-VST <- Read10X(data.dir=VSTfilepath)
-ATC <- CreateSeuratObject(counts=ATC, project="ATC")
-VST <- CreateSeuratObject(counts=VST, project="VST")
-dat_1 <- merge(ATC, y=VST, add.cell.ids=c("ATC","VST"), project="project-name")
 dat_1[["percent.mt"]] <- PercentageFeatureSet(dat_1, pattern ="^MT-", )
 VlnPlot(dat_1, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"),ncol=3)
 dev.off()

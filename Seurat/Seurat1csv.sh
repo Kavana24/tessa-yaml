@@ -59,7 +59,7 @@ function bucketcopy() {
 arr=("$@")
 for bucket in ${arr[@]}
 do
-`gsutil cp -r $bucket mounttest/`
+`gsutil cp -r $bucket /mounttest/`
 done
 }
 bucketcopy "${originalgcsbucArr[@]}"

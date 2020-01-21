@@ -13,11 +13,11 @@ do
 csvtool drop $i $input1 | csvtool take 1 - > output.csv
 expid=`csvtool format '%(1)\n' output.csv`
 outputgcsbucket=`csvtool format '%(2)\n' output.csv`
-outputbucketvalue=`mysql -hseurat-test -P3306 -ujenkinsuser -pjenkins123 -D tessa_output -B -N -e "Select count(Outputgcsbucket) from cellranger_new_output_details where Outputgcsbucket='$outputgcsbucket' AND Cellranger_status = 'Success' AND ApprovalStatus = 'Approved'";`
+outputbucketvalue=`mysql -h10.60.2.8 -P3306 -ujenkinsuser -pjenkins123 -D tessa_output -B -N -e "Select count(Outputgcsbucket) from cellranger_new_output_details where Outputgcsbucket='$outputgcsbucket' AND Cellranger_status = 'Success' AND ApprovalStatus = 'Approved'";`
 #echo $outputbucketvalue
 if [ $outputbucketvalue -eq 1 ]
 then
-sampleID=`mysql -hseurat-test -P3306 -ujenkinsuser -pjenkins123 -D tessa_output -B -N -e "Select Sample_ID_BuildID  from cellranger_new_output_details where Outputgcsbucket = '$outputgcsbucket'";`
+sampleID=`mysql -h10.60.2.8 -P3306 -ujenkinsuser -pjenkins123 -D tessa_output -B -N -e "Select Sample_ID_BuildID  from cellranger_new_output_details where Outputgcsbucket = '$outputgcsbucket'";`
 
 sampleIdArr=("${sampleIdArr[@]}" "$sampleID")
 

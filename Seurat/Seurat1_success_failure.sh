@@ -3,7 +3,7 @@ BUILDID="$1"
 echo $BUILDID
 JENKINSJOBID="$2"
 EXPID="$3"
-var1=`var1=`echo "$a" | awk '{print tolower($0)}'`;
+var1=`echo "$EXPID" | awk '{print tolower($0)}'`;
 expidlower=`echo "$var1" | tr '_' '-'`;
 K8JOBNAME="$expidlower"-"seurat1"-"$BUILDID";
 podname=`hostname`;

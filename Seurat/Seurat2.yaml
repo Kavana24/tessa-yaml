@@ -24,7 +24,7 @@ spec:
       - name: seurat2job-copydata
         image: asia.gcr.io/ts-uat/seuratinitubuntu:v1
         workingDir: /mounttest
-        command: ["/bin/bash","-c","git clone https://github.com/Kavana24/tessa-yaml.git /mounttest/gitrepo && gsutil cp -r {{SEURAT1OPGCSBUCKET}} && ls"]
+        command: ["/bin/bash","-c","git clone https://github.com/Kavana24/tessa-yaml.git /mounttest/gitrepo && gsutil cp -r {{SEURAT1OUTGCSBUCKET}} && ls"]
         volumeMounts:
         - name: ssd-persistent-storage
           mountPath: /mounttest
@@ -44,7 +44,7 @@ spec:
           image: asia.gcr.io/ts-uat/seuratimg_conda:v2
           workingDir: /mounttest
           command: ["/bin/bash"]
-          args: ["-c", "source ~/.bashrc; source activate py36; sh /mounttest/Taka/Scripts/Seurat2bash.sh {{BUILDID}} {{JENKINSJOBNAME}} /mounttest/{{RDSINPUTFOLDERPATH}} "]
+          args: ["-c", "source ~/.bashrc; source activate py36; sh /mounttest/gitrepo/Seurat/Seurat2_success_failure.sh {{BUILDID}} {{JENKINSJOBNAME}} {{EXPID}} {{RDSFILEPATH}} "]
           volumeMounts:
           - name: ssd-persistent-storage
             mountPath: /mounttest

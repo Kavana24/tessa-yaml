@@ -1,1 +1,60 @@
-
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ssd-data-seurat-{{BUILDID}}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{PVCSIZE}}Gi
+  storageClassName: ssd
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{expidlower}}-seurat2-{{BUILDID}}
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{expidlower}}-seuart2-{{BUILDID}}
+    spec:
+      initContainers:
+      - name: seurat2job-copydata
+        image: asia.gcr.io/ts-uat/seuratinitubuntu:v1
+        workingDir: /mounttest
+        command: ["/bin/bash","-c","git clone https://github.com/Kavana24/tessa-yaml.git /mounttest/gitrepo && gsutil cp -r {{SEURAT1OPGCSBUCKET}} && ls"]
+        volumeMounts:
+        - name: ssd-persistent-storage
+          mountPath: /mounttest
+        securityContext:
+          privileged: true
+      - name: seurat2job-checkexistingfile
+        image: asia.gcr.io/ts-uat/seuratinitubuntu:v1
+        workingDir: /mounttest
+        command: ["/bin/bash","-c","rm -rf /mounttest/seurat2out-{{EXPID}}-{{BUILDID}}"]
+        volumeMounts:
+        - name: ssd-persistent-storage
+          mountPath: /mounttest
+        securityContext:
+          privileged: true 
+      containers:
+        - name: seurat2job-seurat
+          image: asia.gcr.io/ts-uat/seuratimg_conda:v2
+          workingDir: /mounttest
+          command: ["/bin/bash"]
+          args: ["-c", "source ~/.bashrc; source activate py36; sh /mounttest/Taka/Scripts/Seurat2bash.sh {{BUILDID}} {{JENKINSJOBNAME}} /mounttest/{{RDSINPUTFOLDERPATH}} "]
+          volumeMounts:
+          - name: ssd-persistent-storage
+            mountPath: /mounttest
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - SYS_ADMIN
+      restartPolicy: Never
+      volumes:
+        - name: ssd-persistent-storage
+          persistentVolumeClaim:
+             claimName: ssd-data

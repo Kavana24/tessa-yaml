@@ -12,7 +12,7 @@ SEURATOUTGCSBUCKET="gs://testinggenomic/Seurat_output"
 SEURAT3OUTFOLDER="seurat3out"-"$EXPID"-"$BUILDID"
 RDSINPUTFILEPATH="/mounttest/$SEURAT1RDSFOLDERPATH/$EXPID.rds"
 
-if mkdir $SEURAT3OUTFOLDER && cd $SEURAT3OUTFOLDER && mkdir CD4_renorm && Rscript /mounttest/gitrepo/Seurat/Seurat3.R $RDSINPUTFILEPATH && ls && gsutil cp -r ../$SEURAT2OUTFOLDER $SEURATOUTGCSBUCKET;
+if mkdir $SEURAT3OUTFOLDER && cd $SEURAT3OUTFOLDER && mkdir CD4_renorm && Rscript /mounttest/gitrepo/Seurat/Seurat3.R $RDSINPUTFILEPATH && ls && gsutil cp -r ../$SEURAT3OUTFOLDER $SEURATOUTGCSBUCKET;
 then
 echo "working"
 java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Seurat3-success-notification -p jenkinsjobID=$JENKINSJOBNAME-$BUILDID -p k8jobname=$K8JOBNAME -p podname=$podname -p expid=$EXPID outputgcsbucket=$SEURATOUTGCSBUCKET/$SEURAT3OUTFOLDER -p seurat3outfolder=$SEURAT3OUTFOLDER 

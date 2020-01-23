@@ -10,7 +10,7 @@ K8JOBNAME="$expidlower"-"seurat3"-"$BUILDID";
 podname=`hostname`;
 SEURATOUTGCSBUCKET="gs://testinggenomic/Seurat_output"
 SEURAT3OUTFOLDER="seurat3out"-"$EXPID"-"$BUILDID"
-RDSINPUTFILEPATH="/mounttest/$SEURAT1RDSFOLDERPATH/$EXPID.rds"
+RDSINPUTFILEPATH="/mounttest/$SEURAT1RDSFOLDERPATH/Seurat1.rds"
 
 if mkdir $SEURAT3OUTFOLDER && cd $SEURAT3OUTFOLDER && mkdir CD4_renorm && Rscript /mounttest/gitrepo/Seurat/Seurat3.R $RDSINPUTFILEPATH && ls && gsutil cp -r ../$SEURAT3OUTFOLDER $SEURATOUTGCSBUCKET;
 then

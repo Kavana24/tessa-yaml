@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ssd-data-seurat3-{{BUILDID}}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{PVCSIZE}}Gi
+  storageClassName: ssd
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{expidlower}}-seurat3-{{BUILDID}}
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{expidlower}}-seuart3-{{BUILDID}}
+    spec:
+      initContainers:
+      - name: seurat3job-copydata
+        image: asia.gcr.io/ts-uat/seuratinitubuntu:v1
+        workingDir: /mounttest
+        command: ["/bin/bash","-c","git clone https://github.com/Kavana24/tessa-yaml.git /mounttest/gitrepo && gsutil cp -r {{SEURAT1OUTGCSBUCKET}} && ls"]
+        volumeMounts:
+        - name: ssd-persistent-storage
+          mountPath: /mounttest
+        securityContext:
+          privileged: true
+      - name: seurat3job-checkexistingfile
+        image: asia.gcr.io/ts-uat/seuratinitubuntu:v1
+        workingDir: /mounttest
+        command: ["/bin/bash","-c","rm -rf /mounttest/seurat3out-{{EXPID}}-{{BUILDID}}"]
+        volumeMounts:
+        - name: ssd-persistent-storage
+          mountPath: /mounttest
+        securityContext:
+          privileged: true 
+      containers:
+        - name: seurat3job-seurat
+          image: asia.gcr.io/ts-uat/seuratimg_conda:v2
+          workingDir: /mounttest
+          command: ["/bin/bash"]
+          args: ["-c", "source ~/.bashrc; source activate py36; sh /mounttest/gitrepo/Seurat/Seurat3_success_failure.sh {{BUILDID}} {{JENKINSJOBNAME}} {{EXPID}} {{SEURAT1RDSFOLDERPATH}} "]
+          volumeMounts:
+          - name: ssd-persistent-storage
+            mountPath: /mounttest
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - SYS_ADMIN
+      restartPolicy: Never
+      volumes:
+        - name: ssd-persistent-storage
+          persistentVolumeClaim:
+             claimName: ssd-data-seurat3-{{BUILDID}}

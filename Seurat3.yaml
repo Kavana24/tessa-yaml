@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
         - name: seurat3job-seurat
-          image: asia.gcr.io/ts-uat/seuratimg_conda:v2
+          image: asia.gcr.io/ts-uat/seuratimg:v2
           workingDir: /mounttest
           command: ["/bin/bash"]
           args: ["-c", "source ~/.bashrc; source activate py36; sh /mounttest/Taka/Scripts/Seurat3bash.sh {{BUILDID}} {{JENKINSJOBNAME}} /mounttest/{{RDSINPUTFOLDERPATH}} "]

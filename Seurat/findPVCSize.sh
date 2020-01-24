@@ -22,33 +22,23 @@ sampleID=`mysql -hseurat-test -P3306 -ujenkinsuser -pjenkins123 -D tessa_output 
 sampleIdArr=("${sampleIdArr[@]}" "$sampleID")
 
 originalgcsbucArr=("${originalgcsbucArr[@]}" "$outputgcsbucket")
-#else
-#echo "Output GCS bucket not present in Cellranger Output table"
 fi
 done
-#printf '%s\n'  "${sampleIdArr[@]}";
-#printf '%s\n'  "${originalgcsbucArr[@]}";
 rm output.csv
 rm $input1
 
-function calPvcSize() {
-
+calPvcSize() {
 arr=("$@")
-#echo "${arr[@]}"
+declare -a pvcbuckArr=("${!1}")
 len=${#arr[@]}
-#echo $len
-for opbucket in ${arr[@]}
+for opbucket in ${pvcbuckArr[@]}
 do
 size=`gsutil du -s $opbucket`
-#echo $size
 sizespilt="$(cut -d ' ' -f1 <<<"$size")"
-#echo splitsize $sizespilt
 let sum=$(($sum+$sizespilt))
-#echo sum $sum
 done
 sizemul=`expr $sum \* 4`
 PVCSIZE=`expr $sizemul / 1073741824`
-#echo $PVCSIZE
 }
-calPvcSize "${originalgcsbucArr[@]}"
+calPvcSize originalgcsbucArr[@]
 echo $(( $PVCSIZE ))

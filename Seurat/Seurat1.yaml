@@ -41,7 +41,7 @@ spec:
           privileged: true
       containers:
         - name: seurat1job-seurat
-          image: asia.gcr.io/ts-uat/seuratimg_conda:v3
+          image: asia.gcr.io/ts-uat/seuratimg:v2
           workingDir: /mounttest
           command: ["/bin/bash"]
           args: ["-c", "source ~/.bashrc; source activate py36; sh /mounttest/gitrepo/Seurat/Seurat1_success_failure.sh {{BUILDID}} {{JENKINSJOBNAME}} {{EXPID}}"]

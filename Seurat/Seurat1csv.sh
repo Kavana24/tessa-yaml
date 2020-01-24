@@ -74,7 +74,6 @@ sed -i "3r $Rscript" /mounttest/gitrepo/Seurat/Seurat1.R
 `sed -i 's/project-name/'$expidnew'/g' Seurat.R`
 bucketcopy() {
 declare -a copybuckArr=("${!1}")
-declare -a copybuckArr=("${!1}")
 for bucket in ${copybuckArr[@]}
         do
         `gsutil cp -r $bucket /mounttest/`

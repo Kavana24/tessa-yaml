@@ -72,6 +72,7 @@ Rscript="Seurat$RANDOM.txt"
 seurat sampleIdArr[@] opGcsArr[@]  > $Rscript
 sed -i "3r $Rscript" /mounttest/gitrepo/Seurat/Seurat1.R
 `sed -i 's/project-name/'$expidnew'/g' Seurat.R`
+
 bucketcopy() {
 declare -a copybuckArr=("${!1}")
 for bucket in ${copybuckArr[@]}

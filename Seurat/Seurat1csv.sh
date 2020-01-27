@@ -39,7 +39,7 @@ seurat(){
         len=${#IDArr[@]}
 for ((i=0; i<$len; i++))
                 do
-                echo "${IDArr[i]} <- Read10X(data.dir=\"$"{BucketArr[i]}"\")"
+                echo "${IDArr[i]} <- Read10X(data.dir=\""${BucketArr[i]}"\")"
         done
         for ((j=0; j<$len; j++))
                 do

@@ -22,6 +22,6 @@ java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Seu
 else
 
 echo "not working"
-java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Seurat-failure-notification -p jenkinsjobID=$JENKINSJOBNAME-$BUILDID -p k8jobID=$K8JOBNAME
+java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Seurat-failure-notification -p jenkinsjobID=$JENKINSJOBNAME-$BUILDID -p k8jobname=$K8JOBNAME -p podname=$podname
 
 fi

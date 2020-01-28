@@ -18,5 +18,5 @@ java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Seu
 else
 echo "not working"
 mysql -h10.60.2.8 -P3306 -ujenkinsuser -pjenkins123 -D tessa_output -e "INSERT INTO seurat1_output_details(experimentID,jenkinsjobname_buildid,k8jobname,podname,Outputgcsbucket,outputfoldername,Seurat1_status,ApprovalStatus) VALUES ('$EXPID','$JENKINSJOBID_$BUILDID','$K8JOBNAME','$podname','$SEURATOUTGCSBUCKET/$SEURATOUTFOLDER','$SEURATOUTFOLDER','Failure','Denied')";
-java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Seurat-failure-notification -p jenkinsjobID=$JENKINSJOBID-$BUILDID -p k8jobID=seuart1-$BUILDID
+java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Seurat-failure-notification -p jenkinsjobID=$JENKINSJOBID-$BUILDID -p k8jobname=$K8JOBNAME -p podname=$podname
 fi

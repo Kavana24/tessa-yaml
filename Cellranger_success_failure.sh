@@ -13,7 +13,11 @@ FASTQS="$6"
 SAMPLE="$5"
 id="$ID"_"$BUILDID";
 podname=`hostname`;
-k8jobname="$EXPID"-"$ID"-cellranger-"$BUILDID";
+var1=`echo "$EXPID" | awk '{print tolower($0)}'`;
+expidlower=`echo "$var1" | tr '_' '-'`;
+var2=`echo "$ID" | awk '{print tolower($0)}'`;
+idlower=`echo "$var2" | tr '_' '-'`;
+k8jobname="$expidlower"-"$idlower"-cellranger-"$BUILDID";
 
 #i=1;
 #if [ $i -eq 2 ]

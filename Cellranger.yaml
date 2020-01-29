@@ -24,7 +24,7 @@ spec:
       - name: cellranger-copydata
         image: asia.gcr.io/ts-uat/initcontainerimg:v1
         workingDir: /mounttest
-        command: ["/bin/bash","-c"," gsutil cp -r {{CELLRANGERGCSBUCKET}} /mounttest/ && ls"]
+        command: ["/bin/bash","-c","git clone https://github.com/Kavana24/tessa-yaml.git /mounttest/gitrepo && gsutil cp -r {{CELLRANGERGCSBUCKET}} /mounttest/ && gsutil cp -r {{REFERENCEDATABUCKET}} /mounttest/ && ls"]
         volumeMounts:
         - name: ssd-persistent-storage
           mountPath: /mounttest
@@ -41,10 +41,10 @@ spec:
           privileged: true
       containers:
         - name: cellranger-cellranger
-          image: asia.gcr.io/ts-uat/cellgsutil:v6
+          image: asia.gcr.io/ts-uat/cellgsutil:v7
           workingDir: /mounttest
-          command: ["/bin/sh"]
-          args: ["-c", "sh /Cellrangerbash.sh {{BUILDID}} {{JENKINSJOBNAME}} {{ID}} {{TRANSCRIPTOME}} {{SAMPLE}} {{FASTQS}} {{EXPID}}"]
+          command: ["/bin/bash"]
+          args: ["-c", "bash /mounttest/gitrepo/Cellranger_success_failure.sh {{BUILDID}} {{JENKINSJOBNAME}} {{ID}} {{TRANSCRIPTOME}} {{SAMPLE}} {{FASTQS}} {{EXPID}}"]
           volumeMounts:
           - name: ssd-persistent-storage
             mountPath: /mounttest
@@ -60,11 +60,11 @@ spec:
                 resource: limits.cpu
           resources:
             requests:
-              memory: 12Gi
-              cpu: 8
+              memory: 8Gi
+              cpu: 4
             limits:
-              memory: 16Gi
-              cpu: 8      
+              memory: 12Gi
+              cpu: 6     
       restartPolicy: Never
       volumes:
         - name: ssd-persistent-storage

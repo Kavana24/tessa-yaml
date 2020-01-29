@@ -30,6 +30,7 @@ id=`csvtool format '%(2)\n' output.csv`
 transcriptome=`csvtool format '%(3)\n' output.csv`
 fastqs=`csvtool format '%(4)\n' output.csv`
 gcsbucket=`csvtool format '%(6)\n' output.csv`
+referencedatabucket=`csvtool format '%(7)\n' output.csv`
 sample=`csvtool format '%(5)\n' output.csv`
 #parse the sample value, remove double qoutes
 sample1=`echo $sample | sed 's/"//g'`
@@ -41,6 +42,7 @@ echo fastqs = $fastqs
 echo sample = $sample
 echo sample1 = $sample1
 echo gcsbucket = $gcsbucket
+echo referencedatabucket = $referencedatabucket
 size1=`gsutil du -s $gcsbucket`
 echo $size1
 #calculating the size for the k8-pvc
@@ -52,7 +54,7 @@ echo $PVCSIZE
 count=`mysql -hseurat-test -P3306 -ujenkinsuser -pjenkins123 -D tessa_output -B -N -e "Select count(Sample_ID) from $expid where Sample_ID='$id'";`
 if [ $count -eq 1 ]
 then
-java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build  Cellranger-pipeline -p size=$PVCSIZE -p Experiment_ID=$expid -p id=$id -p transcriptome=$transcriptome -p sample=$sample1 -p fastqs=$fastqs -p gcsbucket=$gcsbucket
+java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build  Cellranger-pipeline -p size=$PVCSIZE -p Experiment_ID=$expid -p id=$id -p transcriptome=$transcriptome -p sample=$sample1 -p fastqs=$fastqs -p gcsbucket=$gcsbucket -p referencedatabucket=$referencedatabucket
 else
 echo "Invalid ID for the corresponding Experiment"; 
 fi

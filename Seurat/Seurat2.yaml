@@ -44,7 +44,7 @@ spec:
           image: asia.gcr.io/ts-uat/seuratimg:v2
           workingDir: /mounttest
           command: ["/bin/bash"]
-          args: ["-c", "source ~/.bashrc; source activate py36; sh /mounttest/gitrepo/Seurat/Seurat2_success_failure.sh {{BUILDID}} {{JENKINSJOBNAME}} {{EXPID}} {{SEURAT1RDSFOLDERPATH}} {{SEURAT1OUTGCSBUCKET}} "]
+          args: ["-c", "source ~/.bashrc; source activate py36; sh /mounttest/gitrepo/Seurat/Seurat2_success_failure.sh {{BUILDID}} {{JENKINSJOBNAME}} {{EXPID}} {{SEURAT1OUTGCSBUCKET}} "]
           volumeMounts:
           - name: ssd-persistent-storage
             mountPath: /mounttest

@@ -53,18 +53,6 @@ spec:
             capabilities:
               add:
                 - SYS_ADMIN
-          env:
-          - name: PROCESSORS
-            valueFrom:
-              resourceFieldRef:
-                resource: limits.cpu
-          resources:
-            requests:
-              memory: 8Gi
-              cpu: 4
-            limits:
-              memory: 12Gi
-              cpu: 6     
       restartPolicy: Never
       volumes:
         - name: ssd-persistent-storage

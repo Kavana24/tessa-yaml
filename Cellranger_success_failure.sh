@@ -30,9 +30,9 @@ if cellranger count --id=$id --transcriptome=$TRANSCRIPTOME --sample=$SAMPLE --f
 then
 echo "Success"
 df -h
-java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Cellranger-success-notification -p jenkinsjobID=$JENKINSJOBID-$BUILDID -p k8jobID=$k8jobname -p outputgcsbucket=gs://testinggenomic/Cellranger_output/$id -p id=$id -p Experiment_ID=$EXPID -p Podname=$podname
 mysql -h10.60.2.8 -P3306 -ujenkinsuser -pjenkins123 -D tessa_output -e "INSERT INTO cellranger_new_output_details(ExperimentID,SampleID,Sample_ID_BuildID,jenkinsjobid_buildid,k8jobname,podname,Outputgcsbucket,Cellranger_status,ApprovalStatus) 
 VALUES ('$EXPID','$ID','$id','$jenkinsjobid_buildid','$k8jobname','$podname','$Outputgcsbucket/$id','Success','Denied')"
+java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Cellranger-success-notification -p jenkinsjobID=$JENKINSJOBID-$BUILDID -p k8jobID=$k8jobname -p outputgcsbucket=gs://testinggenomic/Cellranger_output/$id -p id=$id -p Experiment_ID=$EXPID -p Podname=$podname
 else
 echo "Failed"
 df -h

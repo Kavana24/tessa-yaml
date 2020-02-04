@@ -36,5 +36,7 @@ java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Cel
 else
 echo "Failed"
 df -h
+mysql -h10.60.2.8 -P3306 -ujenkinsuser -pjenkins123 -D tessa_output -e "INSERT INTO cellranger_new_output_details(ExperimentID,SampleID,Sample_ID_BuildID,jenkinsjobid_buildid,k8jobname,podname,Outputgcsbucket,Cellranger_status,ApprovalStatus) 
+VALUES ('$EXPID','$ID','$id','$jenkinsjobid_buildid','$k8jobname','$podname','NA','Failure','NA')"
 java -jar /jenkins-cli.jar -s http://10.60.2.9:8080/ -auth admin:admin build Cellranger-failure-notification -p jenkinsjobID=$JENKINSJOBID-$BUILDID -p k8jobID=$k8jobname -p id=$id -p Experiment_ID=$EXPID -p Podname=$podname
 fi

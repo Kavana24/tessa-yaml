@@ -83,5 +83,4 @@ for bucket in ${copybuckArr[@]}
 #echo $expid
 bucketcopy originalgcsbucArr[@]
 rm $Rscript
-rm $input1
-    
+  

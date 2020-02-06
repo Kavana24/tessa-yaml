@@ -27,11 +27,13 @@ do
 csvtool drop $i $input1 | csvtool take 1 - > output.csv
 expid=`csvtool format '%(1)\n' output.csv`
 id=`csvtool format '%(2)\n' output.csv`
-transcriptome=`csvtool format '%(3)\n' output.csv`
-fastqs=`csvtool format '%(4)\n' output.csv`
-gcsbucket=`csvtool format '%(6)\n' output.csv`
-referencedatabucket=`csvtool format '%(7)\n' output.csv`
-sample=`csvtool format '%(5)\n' output.csv`
+sample=`csvtool format '%(3)\n' output.csv`
+gcsbucket=`csvtool format '%(4)\n' output.csv`
+referencedatabucket=`csvtool format '%(5)\n' output.csv`
+transcriptomebase=`basename $referencedatabucket`
+transcriptome="/mounttest/$transcriptomebase"
+fastqsbase=`basename $gcsbucket`
+fastqs="/mounttest/$gcsbucket"
 #parse the sample value, remove double qoutes
 sample1=`echo $sample | sed 's/"//g'`
 #csvtool format '%(4)\n' output.csv

@@ -47,9 +47,9 @@ then
         #echo $file
         cp $md5_all $md5_all.tmp
         for f in ${file[@]};do
-                absolutepath=`find .. -name "$f" -exec readlink -f {} \;`
+                absolutepath=$(find .. -name "$f" -exec readlink -f {} \;)
                 #echo $f
-                #echo $absolutepath
+                echo $absolutepath
                 if ! [ -z $absolutepath ]
                 then
                         sed -i "s|$f|$absolutepath|g" "$md5_all.tmp"

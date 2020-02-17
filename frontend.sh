@@ -38,6 +38,7 @@ fi
 function checkmd5
 {
 arg1=$1
+cd $arg1
 md5_all=`find $arg1 -name "md5_all.dat" -print`
 echo $md5_all
 if ! [ -z $md5_all ]

@@ -14,7 +14,7 @@ var2=$(find $SEARCH_FOLDER  -type f -name '*.fq.gz' | wc -l)
 echo $var2
 if [ 0 -lt $var2 ]
 then
-echo "Call perl script"
+echo "Files are in format fg.gz. Call perl script to rename the files"
 #rename all files and move to renamed_data
 #OUTDIR=$SEARCH_FOLDER"_renamed_data"
 #echo $OUTDIR
@@ -29,7 +29,7 @@ fi
 #var3=$(find $SEARCH_FOLDER  -type f -name '*.fastq.gz' | wc -l)
 elif [ 0 -lt $var ]
 then
-echo "Files are already in .fastq.gz......Copying $OUTDIR to GCS bucket."
+echo "Files are in .fastq.gz format......Copying $OUTDIR to GCS bucket."
 #cp
 echo "This completes scanning the input data with Antivirus,Verifying checksums and Renaming the files from fq.gz to fastq.gz."
 fi

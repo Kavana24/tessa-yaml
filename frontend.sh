@@ -50,18 +50,18 @@ then
         for f in ${file[@]};do
                 absolutepath=$(find .. -name "$f" -exec readlink -f {} \;)
                 #echo $f
-                echo $absolutepath
+                #echo $absolutepath
                 if ! [ -z $absolutepath ]
                 then
                         sed -i "s|$f|$absolutepath|g" "$md5_all.tmp"
                 fi
                 #cat $md5_all
         done
-        md5sum -c $md5_all.tmp > checksumlogs.txt
+        md5sum -c $md5_all.tmp > $WORKSPACE/checksumlogs.txt
         if grep -c "FAILED" checksumlogs.txt > 0 ;
         then
                 echo "These files have failed in verifying checksum"
-                grep -i "Failed" checksumlogs.txt
+                grep -i "Failed" $WORKSPACE/checksumlogs.txt
         else
                 echo "Checksum successfull.We shall now check for file format"
                 checkfileformat $arg1
@@ -69,10 +69,11 @@ then
 else
         echo "$md5_all is not present"
 fi
+rm -rf $md5_all.tmp
 }
 
 sudo clamscan -r --bell -i $Unscannedfolder  >> /var/log/clamav/scan_summary/scan_logs.txt
-tail -n 9 /var/log/clamav/scan_summary/scan_logs.txt > scan_logs.txt.tmp
+tail -n 9 /var/log/clamav/scan_summary/scan_logs.txt > $WORKSPACE/scan_logs.txt.tmp
 if grep -q "Infected files: 0" "scan_logs.txt.tmp";
 then
         echo "test pass"

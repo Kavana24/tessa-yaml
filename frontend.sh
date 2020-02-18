@@ -29,7 +29,7 @@ fi
 #var3=$(find $SEARCH_FOLDER  -type f -name '*.fastq.gz' | wc -l)
 elif [ 0 -lt $var ]
 then
-echo "Files are in .fastq.gz format......Copying $OUTDIR to GCS bucket."
+echo "Files are in .fastq.gz format......Copying $SEARCH_FOLDER to GCS bucket."
 #cp
 echo "This completes scanning the input data with Antivirus,Verifying checksums and Renaming the files from fq.gz to fastq.gz."
 fi

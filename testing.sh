@@ -1,4 +1,4 @@
 #!/bin/sh
 sleep 20s
-echo "Print this  $BUILDID" >> $WORKSPACE/print.txt
+echo "Print this $BUILD_ID" >> $WORKSPACE/print.txt
 cat $WORKSPACE/print.txt

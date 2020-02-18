@@ -18,7 +18,7 @@ echo "Files are in format fg.gz. Calling perl script to rename the files"
 #rename all files and move to renamed_data
 #OUTDIR=$SEARCH_FOLDER"_renamed_data"
 #echo $OUTDIR
-perl "/home/user1/rename.pl" $SEARCH_FOLDER $OUTDIR > cp.cmd
+perl "$WORKSPACE/rename.pl" $SEARCH_FOLDER $OUTDIR > cp.cmd
 sh cp.cmd
 #recursive function
 checkfileformat $OUTDIR

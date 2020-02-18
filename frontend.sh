@@ -14,12 +14,12 @@ var2=$(find $SEARCH_FOLDER  -type f -name '*.fq.gz' | wc -l)
 echo $var2
 if [ 0 -lt $var2 ]
 then
-echo "Files are in format fg.gz. Call perl script to rename the files"
+echo "Files are in format fg.gz. Calling perl script to rename the files"
 #rename all files and move to renamed_data
 #OUTDIR=$SEARCH_FOLDER"_renamed_data"
 #echo $OUTDIR
- perl "/home/user1/rename.pl" $SEARCH_FOLDER $OUTDIR > cp.cmd
- sh cp.cmd
+perl "/home/user1/rename.pl" $SEARCH_FOLDER $OUTDIR > cp.cmd
+sh cp.cmd
 #recursive function
 checkfileformat $OUTDIR
 else

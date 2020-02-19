@@ -5,13 +5,13 @@ checkfileformat()
 {
 SEARCH_FOLDER="$1"
 OUTDIR=$SEARCH_FOLDER"_renamed_data"
-echo $SEARCH_FOLDER
+#echo $SEARCH_FOLDER
 var=$(find $SEARCH_FOLDER  -type f -name '*.fastq.gz' | wc -l)
-echo $var
+#echo $var
 if [ 0 -eq $var ]
 then
 var2=$(find $SEARCH_FOLDER  -type f -name '*.fq.gz' | wc -l)
-echo $var2
+#echo $var2
 if [ 0 -lt $var2 ]
 then
 echo "Files are in format fg.gz. Calling perl script to rename the files"
@@ -76,7 +76,7 @@ sudo clamscan -r --bell -i $Unscannedfolder  >> /var/log/clamav/scan_summary/sca
 tail -n 9 /var/log/clamav/scan_summary/scan_logs.txt > $WORKSPACE/scan_logs.txt.tmp
 if grep -q "Infected files: 0" "scan_logs.txt.tmp";
 then
-        echo "test pass"
+        echo "There are no infected files"
         #echo $dir $file $action
         basename=`basename $Unscannedfolder`
         directory=`basename $(dirname $Unscannedfolder)`

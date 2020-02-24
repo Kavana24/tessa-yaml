@@ -33,7 +33,7 @@ referencedatabucket=`csvtool format '%(5)\n' output.csv`
 transcriptomebase=`basename $referencedatabucket`
 transcriptome="/mounttest/$transcriptomebase"
 fastqsbase=`basename $gcsbucket`
-fastqs="/mounttest/$gcsbucket"
+fastqs="/mounttest/$fastqsbase"
 #parse the sample value, remove double qoutes
 sample1=`echo $sample | sed 's/"//g'`
 #csvtool format '%(4)\n' output.csv

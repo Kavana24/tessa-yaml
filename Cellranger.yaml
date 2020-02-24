@@ -24,7 +24,7 @@ spec:
       - name: cellranger-copydata
         image: asia.gcr.io/ts-uat/seuratinitubuntu:v1
         workingDir: /mounttest
-        command: ["/bin/bash","-c","rm -rf /mounttest/gitrepo && git clone https://github.com/Kavana24/tessa-yaml.git /mounttest/gitrepo && gsutil cp -r {{CELLRANGERGCSBUCKET}} /mounttest/ && gsutil cp -r {{REFERENCEDATABUCKET}} /mounttest/ && ls"]
+        command: ["/bin/bash","-c","rm -rf /mounttest/gitrepo && git clone https://github.com/Kavana24/tessa-yaml.git /mounttest/gitrepo && bash /mounttest/gitrepo/Cellranger_Init_Failure.sh {{BUILDID}} {{JENKINSJOBNAME}} {{ID}} {{EXPID}} {{CELLRANGERGCSBUCKET}} {{REFERENCEDATABUCKET}}"]
         volumeMounts:
         - name: ssd-persistent-storage
           mountPath: /mounttest

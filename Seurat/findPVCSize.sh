@@ -1,7 +1,7 @@
 #!/bin/bash
 #read the csv file
 input="$1"
-input1="sample$opGcsArrRANDOM.csv"
+input1="sample$RANDOM.csv"
 dos2unix $input
 exec < $input || exit 1
 awk 'NR>1' $input > $input1

@@ -2,16 +2,12 @@
 #read the csv file
 input="$1"
 input1="sample$RANDOM.csv"
-
 dos2unix $input
 echo "dos2unix $input passed"
 exec < $input || exit 1
-echo "exec < $input || exit 1  passed"
 awk 'NR>1' $input > $input1
-cat $input1
-echo "awk passed"
 inputLength=`csvtool height $input1`
-echo $inputLength
+#echo $inputLength
 declare -a sampleIdArr
 declare -a originalgcsbucArr
 sum=0

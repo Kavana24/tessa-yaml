@@ -3,7 +3,6 @@
 input="$1"
 input1="sample$RANDOM.csv"
 dos2unix $input
-echo "dos2unix $input passed"
 exec < $input || exit 1
 awk 'NR>1' $input > $input1
 inputLength=`csvtool height $input1`

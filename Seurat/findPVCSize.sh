@@ -2,6 +2,7 @@
 #read the csv file
 input="$1"
 input1="sample$RANDOM.csv"
+cat $input1
 dos2unix $input
 echo "dos2unix $input passed"
 exec < $input || exit 1

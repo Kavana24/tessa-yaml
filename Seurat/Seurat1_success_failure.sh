@@ -10,7 +10,7 @@ podname=`hostname`;
 jenkinsjobid_buildid="$JENKINSJOBID"-"$BUILDID"
 SEURATOUTGCSBUCKET="gs://testinggenomic/Seurat_output"
 SEURATOUTFOLDER="seurat1out"-"$EXPID"-"$BUILDID"
-RANDOMVALUE="$RANDOM"
+RANDOMVALUE=$RANDOM
 echo $RANDOMVALUE
 if mkdir $SEURATOUTFOLDER && cd $SEURATOUTFOLDER &&  Rscript /mounttest/gitrepo/Seurat/Seurat1.R && gsutil cp -r ../$SEURATOUTFOLDER $SEURATOUTGCSBUCKET ;
 then

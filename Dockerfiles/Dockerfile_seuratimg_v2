@@ -1,0 +1,55 @@
+FROM ubuntu:16.04
+
+# File Author
+MAINTAINER nandini
+
+#update and install curl and bzip2
+RUN apt-get update && apt-get install --yes curl bzip2
+#install gsutil
+RUN apt-get update && apt-get install --yes apt-transport-https ca-certificates
+
+RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk main " | \
+    tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
+    apt-get update && apt-get install -y google-cloud-sdk
+#install java and jenkins-cli.jar
+RUN apt-get update -y && apt-get install default-jre -y && \
+    curl --insecure -OL http://10.60.2.9:8080/jnlpJars/jenkins-cli.jar --output jenkins-cli.jar ;
+
+#Install mysql-core-client-5.7
+RUN apt-get update && \
+    apt-get install -y mysql-client
+
+# Anaconda installing
+SHELL ["/bin/bash", "-c"]
+RUN curl -O https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh 
+RUN bash Anaconda3-2019.03-Linux-x86_64.sh -b && \
+    echo "export PATH="~/anaconda3/bin:$PATH"" >> ~/.bashrc && \
+    /bin/bash -c "source ~/.bashrc"
+ENV PATH=~/anaconda3/bin:$PATH
+RUN /bin/bash -c "source ~/.bashrc" && \
+    conda create --name py36 python=3.6 -y && \
+    conda init bash && \
+    source activate py36 && \
+    apt-get update -y && \
+    apt-get install python3-pip python3-dev -y && \
+    pip3 install --upgrade pip && \
+    apt-get install libx11-dev xorg-dev -y;
+
+# Install required programs then clean up
+RUN /bin/bash -c "source ~/.bashrc" && \
+    source activate py36 && \
+    apt-get update && apt-get install --yes libssl-dev libcurl4-openssl-dev libxml2-dev libpng16-16 libtiff5-dev && \
+       apt-get install --yes software-properties-common && \
+       apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 && \
+       add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu xenial-cran35/' && \
+       apt-get update -y && \
+       apt-get install --yes r-base && \
+       apt-get install --yes r-base-dev && \
+    R -e 'install.packages("devtools",repos = "http://cran.us.r-project.org")'; \
+    R -e 'if(!requireNamespace("BiocManager", quietly = TRUE)){install.packages("BiocManager",repos = "http://cran.us.r-project.org")};BiocManager::install();memory.size(max=FALSE);memory.limit(size=NA)'; \	
+    R -e 'BiocManager::install();BiocManager::install('multtest')';\
+    R -e 'install.packages("dplyr",repos = "http://cran.us.r-project.org")'; \
+    R -e 'install.packages("Seurat",repos = "http://cran.us.r-project.org")'; \
+    apt-get clean; \
+    mkdir mounttest;

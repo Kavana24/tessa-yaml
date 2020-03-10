@@ -1,0 +1,45 @@
+FROM ubuntu:16.04
+ENV GCSFUSE_REPO gcsfuse-jessie
+
+RUN apt-get update && apt-get install --yes --no-install-recommends \
+    ca-certificates \
+    curl \
+  && echo "deb http://packages.cloud.google.com/apt $GCSFUSE_REPO main" \
+    | tee -a /etc/apt/sources.list.d/gcsfuse.list \
+  && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
+  && apt-get update \
+  && apt-get install --yes gcsfuse \
+  && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN apt-get update && apt-get install --yes apt-transport-https ca-certificates
+
+RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk main " | \
+    tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
+    apt-get update && apt-get install -y google-cloud-sdk
+#Install vim
+RUN apt-get update && \
+    apt-get install -y vim
+
+#Install mysql-core-client-5.7
+RUN apt-get update && \
+    apt-get install -y mysql-client
+
+#Install dos2unix and csvtool
+RUN apt-get update \
+    && apt-get install -y dos2unix
+RUN apt-get update \
+    && apt-get install -y csvtool
+
+#Install git
+RUN apt-get update \
+    && apt-get install -y git
+
+#install java and jenkins-cli.jar
+
+RUN apt-get update -y && apt-get install default-jre -y && \
+    curl --insecure -OL http://10.60.2.9:8080/jnlpJars/jenkins-cli.jar --output /jenkins-cli.jar
+
+RUN mkdir mounttest
+CMD ["sleep", "3600"]
+

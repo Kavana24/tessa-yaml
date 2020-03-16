@@ -41,7 +41,7 @@ RUN mkdir mounttest
 #install java and jenkins-cli.jar
 
 RUN apt-get update -y && apt-get install default-jre -y && \
-    curl --insecure -OL http://10.60.2.9:8080/jnlpJars/jenkins-cli.jar --output /jenkins-cli.jar
+    curl --insecure -OL http://10.60.2.24:8080/jnlpJars/jenkins-cli.jar --output /jenkins-cli.jar
 
 #Install mysql-core-client-5.7
 RUN apt-get update && \

@@ -24,12 +24,12 @@ spec:
       - name: cellranger-copydata
         image: asia.gcr.io/ts-uat/seuratinitubuntu:v2
         workingDir: /mounttest
-		env:
+	env:
           - name: GIT_URL
-		    valueFrom:
+	    valueFrom:
               secretkeyRefs:
                 name: git-url
-				key:git-url
+		key: git-url
         command: ["/bin/bash","-c","rm -rf /mounttest/gitrepo && git clone $GIT_URL /mounttest/gitrepo && bash /mounttest/gitrepo/Cellranger_Init_Failure.sh {{BUILDID}} {{JENKINSJOBNAME}} {{ID}} {{EXPID}} {{CELLRANGERGCSBUCKET}} {{REFERENCEDATABUCKET}}"]
         volumeMounts:
         - name: ssd-persistent-storage
